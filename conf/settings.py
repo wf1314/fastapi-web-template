@@ -33,7 +33,7 @@ class Settings(BaseSettings):
 
     TORTOISE_ORM_MODELS: list[str] = [
         "apps.account.models.db",
-        "apps.core.models.db",
+        # "apps.core.models.db",
     ]
 
     # Redis
@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
-    TOKEN_URL: str = "account/token"
+    TOKEN_URL: str = "/account/oauth2/token"
 
     class Config:
         env_file = f".envs/.{ENV_FLAG}"

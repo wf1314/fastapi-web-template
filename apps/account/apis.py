@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 
-from apps.account.models import request, response
+from apps.account.models import response
 from common.authentication import (
     authenticate_user,
     create_token,
@@ -15,9 +16,10 @@ router = APIRouter(
 
 
 @router.post("/oauth2/token", response_model=response.Token, summary="获取访问token")
-async def get_access_token(form_data: request.LoginFormData) -> dict[str, str]:
-    form_data = form_data.model_dump()
-    user = await authenticate_user(form_data["username"], form_data["password"])
+async def get_access_token(
+    form_data: OAuth2PasswordRequestForm = Depends(),  # noqa: B008
+) -> dict[str, str]:
+    user = await authenticate_user(form_data.username, form_data.password)
     output = create_token(data={"user_id": user.id})
     return output
 

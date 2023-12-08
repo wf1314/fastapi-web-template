@@ -6,6 +6,7 @@ from fastapi.exceptions import (
     RequestValidationError,
     ResponseValidationError,
 )
+from loguru import logger
 
 from common.response import MyJSONResponse
 
@@ -28,6 +29,7 @@ def register_custom_exception(app: FastAPI) -> None:
     @app.exception_handler(CustomException)
     async def custom_exception_handler(_: Any, exc: CustomException) -> MyJSONResponse:
         """自定义异常返回响应统一处理器"""
+        logger.info(exc)
         return MyJSONResponse(
             status_code=exc.status_code,
             content={"msg": str(exc), "code": exc.default_code},
@@ -36,6 +38,7 @@ def register_custom_exception(app: FastAPI) -> None:
     @app.exception_handler(HTTPException)
     async def http_exception_handler(_: Any, exc: HTTPException) -> MyJSONResponse:
         """HTTPException异常返回响应统一处理器"""
+        logger.info(exc)
         return MyJSONResponse(
             status_code=exc.status_code,
             content={"msg": exc.detail, "code": "10001"},
@@ -46,6 +49,7 @@ def register_custom_exception(app: FastAPI) -> None:
         _: Any, exc: ResponseValidationError
     ) -> MyJSONResponse:
         """BaseModel的ValidationError异常返回响应统一处理器"""
+        logger.info(exc)
         return MyJSONResponse(
             status_code=400,
             content={
@@ -61,6 +65,7 @@ def register_custom_exception(app: FastAPI) -> None:
         _: Any, exc: RequestValidationError
     ) -> MyJSONResponse:
         """自定义异常返回响应统一处理器"""
+        logger.info(exc)
         return MyJSONResponse(
             status_code=400,
             content={

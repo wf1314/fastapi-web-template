@@ -37,6 +37,8 @@ def create_app() -> FastAPI:
     _app = FastAPI(
         default_response_class=CustomJSONResponse,  # 修改默认响应类, 响应中增加code, msg
         lifespan=lifespan,
+        docs_url=None,  # 关闭自带的文档
+        redoc_url=None,
     )
     # 注册中间件
     register_middleware(_app)
@@ -58,7 +60,6 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000)

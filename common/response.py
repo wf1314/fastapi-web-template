@@ -1,14 +1,19 @@
+import datetime
 import json
 import typing
 
 from fastapi import UploadFile
 from fastapi.responses import JSONResponse
 
+from conf.settings import settings
+
 
 class MyJsonEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, UploadFile):
             return o.filename
+        if isinstance(o, datetime.datetime):
+            return o.strftime(settings.DATE_FORMAT)
 
 
 class MyJSONResponse(JSONResponse):

@@ -62,12 +62,12 @@ def init_logging():
             format=LOG_STDERR_FORMAT,
             level=LOG_LEVEL,
             enqueue=True,
-            backtrace=True,
-            diagnose=True,
         )
     else:
         logger.add(
-            sys.stderr, level=LOG_LEVEL, enqueue=True, backtrace=True, diagnose=True
+            sys.stderr,
+            level=LOG_LEVEL,
+            enqueue=True,
         )
     if settings.LOG_WRITE_FILE:
         # 记录运行时日志
