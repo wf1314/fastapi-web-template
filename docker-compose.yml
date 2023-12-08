@@ -1,0 +1,24 @@
+version: '3'
+
+volumes:
+    local_mysql_data:
+
+services:
+    gaokao_prod:
+        build:
+            context: ""
+            dockerfile: Dockerfile
+        image: fastapi_web
+        container_name: fastapi_web
+        restart: always
+        volumes:
+            - .:/srv/app
+        working_dir: /srv/app
+        ports:
+            - "9000:9000"
+        command:
+          - /bin/sh
+          - -c
+          - |
+            poetry run aerich upgrade
+            poetry run gunicorn main:app

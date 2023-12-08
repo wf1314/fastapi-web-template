@@ -1,0 +1,44 @@
+[flake8]
+# 兼容 black 的设置 START
+max-line-length = 88
+extend-ignore = E203
+# END
+
+# (Default: .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg)
+exclude =
+    migrations/*,
+    # .mypy_cache
+    .mypy_cache,
+    # nox
+    .nox,
+    .venv,
+    venv,
+    node_modules,
+
+# B = bugbear
+# C = mccabe
+# E = pycodestyle errors
+# F = flake8 pyflakes
+# W = pycodestyle warnings
+# B9 = bugbear opinions
+# ISC = implicit-str-concat
+select = B, C, E, F, W, B9, ISC
+ignore =
+    # slice notation whitespace, invalid
+    E203
+    # import at top, too many circular import fixes
+    E402
+    # line length, handled by bugbear B950
+    E501
+    # bare except, handled by bugbear B001
+    E722
+    # bin op line break, invalid
+    W503
+    B008
+
+# per-file-ignores =
+#     # __init__ module exports names
+#     src/flask/__init__.py: F401
+# exclude = __init__.py
+
+# vim: set et ft=ini ts=2 sw=2
